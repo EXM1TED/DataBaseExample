@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using БазаДанныхИсправленная.Classes;
+using БазаДанныхИсправленная.Pages;
 
 namespace БазаДанныхИсправленная
 {
@@ -39,7 +40,9 @@ namespace БазаДанныхИсправленная
 
         private void signIn_Click(object sender, RoutedEventArgs e)
         {
-
+            SignInWindow signInWindow = new SignInWindow();
+            signInWindow.Show();
+            this.Close();
         }
     }
 }
