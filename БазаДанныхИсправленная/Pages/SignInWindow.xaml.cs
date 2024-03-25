@@ -37,13 +37,23 @@ namespace БазаДанныхИсправленная.Pages
             string login = loginInput.Text;
             string password = passwordInput.Password;
             UserDataContext context = new UserDataContext();
-            bool userFound = context.Users.Any(user => user.Login == login && 
+            bool userFound = context.Users.Any(user => user.Login == login &&
             user.Password == password);
-            if (userFound)
+            if (userFound = context.Users.Any(user => user.Login == login))
             {
-                MessageBox.Show("Вы успешно вошли в систему", "Входи выполнен", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (userFound = context.Users.Any(user => user.Password == password))
+                {
+                    MessageBox.Show("Вы успешно вошли в систему", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
+                else
+                {
+                    MessageBox.Show("Неверный пароль", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-
+            else
+            {
+                MessageBox.Show("Неверный логин", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
