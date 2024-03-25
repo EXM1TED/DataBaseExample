@@ -37,8 +37,7 @@ namespace БазаДанныхИсправленная.Pages
             string login = loginInput.Text;
             string password = passwordInput.Password;
             UserDataContext context = new UserDataContext();
-            bool userFound = context.Users.Any(user => user.Login == login &&
-            user.Password == password);
+            bool userFound;
             if (userFound = context.Users.Any(user => user.Login == login))
             {
                 if (userFound = context.Users.Any(user => user.Password == password))
