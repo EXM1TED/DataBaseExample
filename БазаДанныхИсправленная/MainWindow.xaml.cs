@@ -29,13 +29,34 @@ namespace БазаДанныхИсправленная
         private void btnRegestration_Click(object sender, RoutedEventArgs e)
         {
             UserDataContext db = new UserDataContext();
+            db.Database.EnsureCreated();
             string login = loginInput.Text;
             string password = passwordInput.Password;
             User user = new User();
             user.Login = login;
             user.Password = password;
-            db.Users.Add(user);
-            db.SaveChanges();
+            if (loginInput.Text == "" && passwordInput.Password == "")
+            {
+                MessageBox.Show("Заполните поле: Логнин, Пароль", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if(loginInput.Text == "")
+            {
+                MessageBox.Show("Заполните поле: Логин", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (passwordInput.Password == "")
+            {
+                MessageBox.Show("Заполните поле: Пароль", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            if (db.Users.Any(user => user.Login == login))
+            {
+                MessageBox.Show("Такой логин уже существует", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
         }
 
         private void signIn_Click(object sender, RoutedEventArgs e)

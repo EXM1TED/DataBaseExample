@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,22 +40,19 @@ namespace БазаДанныхИсправленная.Pages
         {
             string login = loginInput.Text;
             string password = passwordInput.Password;
-            UserDataContext context = new UserDataContext();
-            bool userFound;
-            if (userFound = context.Users.Any(user => user.Login == login))
+            UserDataContext db = new UserDataContext();
+            db.Database.EnsureCreated();
+            var checkUser = db.Users.FromSqlRaw($"select Id, Login, Password from Users where Login = '{login}' and Password = '{password}'").ToList();
+            if ( checkUser.Count == 1 )
             {
-                if (userFound = context.Users.Any(user => user.Password == password))
-                {
-                    MessageBox.Show("Вы успешно вошли в систему", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                }
-                else
-                {
-                    MessageBox.Show("Неверный пароль", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show("Вы успешно вошли в систему", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                Window window = new Window();
+                window.Show();
+                this.Close();
             }
             else
             {
-                MessageBox.Show("Неверный логин", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неверный логин или пароль", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
