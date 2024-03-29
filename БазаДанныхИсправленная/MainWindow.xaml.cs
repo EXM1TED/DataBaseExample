@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace БазаДанныхИсправленная
             {
                 MessageBox.Show("Заполните поле: Логнин, Пароль", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(loginInput.Text == "")
+            else if (loginInput.Text == "")
             {
                 MessageBox.Show("Заполните поле: Логин", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -52,13 +53,28 @@ namespace БазаДанныхИсправленная
             {
                 MessageBox.Show("Такой логин уже существует", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else
+            else if(rdBtnSevenClass.IsChecked == false && rdBtnEightClass.IsChecked == false && rdBtnNineClass.IsChecked == false)
             {
-                db.Users.Add(user);
+                MessageBox.Show("Выбирите свой класс", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if(rdBtnSevenClass.IsChecked == true)
+            {
+                db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (7)");
                 db.SaveChanges();
             }
-        }
+            else if (rdBtnEightClass.IsChecked == true)
+            {
+                db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (8)");
+                db.SaveChanges();
+            }
+            else if (rdBtnNineClass.IsChecked == true)
+            {
+                db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (9)");
+                db.SaveChanges();
+            }
 
+
+        }
         private void signIn_Click(object sender, RoutedEventArgs e)
         {
             SignInWindow signInWindow = new SignInWindow();

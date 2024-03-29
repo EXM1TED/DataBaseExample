@@ -42,7 +42,7 @@ namespace БазаДанныхИсправленная.Pages
             string password = passwordInput.Password;
             UserDataContext db = new UserDataContext();
             db.Database.EnsureCreated();
-            var checkUser = db.Users.FromSqlRaw($"select Id, Login, Password from Users where Login = '{login}' and Password = '{password}'").ToList();
+            var checkUser = db.Users.FromSqlRaw($"SELECT Id, Login, Password, Number_of_class_id FROM Users WHERE Login = '{login}' and Password = '{password}'").ToList();
             if ( checkUser.Count == 1 )
             {
                 MessageBox.Show("Вы успешно вошли в систему", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Asterisk);
