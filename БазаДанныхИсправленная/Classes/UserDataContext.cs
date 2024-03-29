@@ -14,6 +14,10 @@ namespace БазаДанныхИсправленная.Classes
         {
             optionsBuilder.UseSqlite("Data Source=DataFile.db");
         }
-
+        public DbSet<NumberOfClass> NumberOfClasses { get; set; } = null!;
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<NumberOfClass>().ToTable("NumberOfClasses");
+        }
     }
 }
