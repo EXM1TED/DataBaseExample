@@ -48,32 +48,30 @@ namespace БазаДанныхИсправленная
             {
                 MessageBox.Show("Заполните поле: Пароль", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            if (db.Users.Any(user => user.Login == login))
-            {
-                MessageBox.Show("Такой логин уже существует", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if(rdBtnSevenClass.IsChecked == false && rdBtnEightClass.IsChecked == false && rdBtnNineClass.IsChecked == false)
-            {
-                MessageBox.Show("Выбирите свой класс", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if(rdBtnSevenClass.IsChecked == true)
+            if (rdBtnSevenClass.IsChecked == true)
             {
                 db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (7)");
                 db.SaveChanges();
             }
-            else if (rdBtnEightClass.IsChecked == true)
+            if (rdBtnEightClass.IsChecked == true)
             {
                 db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (8)");
                 db.SaveChanges();
             }
-            else if (rdBtnNineClass.IsChecked == true)
+            if (rdBtnNineClass.IsChecked == true)
             {
                 db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (9)");
                 db.SaveChanges();
             }
-
-
+            if (db.Users.Any(user => user.Login == login))
+            {
+                MessageBox.Show("Такой логин уже существует", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
         }
         private void signIn_Click(object sender, RoutedEventArgs e)
         {

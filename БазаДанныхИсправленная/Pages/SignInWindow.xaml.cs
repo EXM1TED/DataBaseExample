@@ -46,8 +46,10 @@ namespace БазаДанныхИсправленная.Pages
             if ( checkUser.Count == 1 )
             {
                 MessageBox.Show("Вы успешно вошли в систему", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                Window window = new Window();
-                window.Show();
+                User user = checkUser[0];
+                UserLog.userSaveInfo = user;
+                MainMenu mainMenu = new MainMenu();
+                mainMenu.Show();
                 this.Close();
             }
             else
