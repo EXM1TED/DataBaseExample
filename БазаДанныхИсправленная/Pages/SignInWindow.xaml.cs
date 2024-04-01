@@ -45,9 +45,15 @@ namespace БазаДанныхИсправленная.Pages
             var checkUser = db.Users.FromSqlRaw($"SELECT Id, Login, Password, Number_of_class_id FROM Users WHERE Login = '{login}' and Password = '{password}'").ToList();
             if ( checkUser.Count == 1 )
             {
+                User user = new User();
+                user.Login = login;
+                user.Password = password;
+                foreach (var className in checkUser)
+                    user.NumberOfClassId = className.NumberOfClassId;
+                UserSave.userSave = user;
                 MessageBox.Show("Вы успешно вошли в систему", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                Window window = new Window();
-                window.Show();
+                MainMenu mainMenu = new MainMenu();
+                mainMenu.Show();
                 this.Close();
             }
             else

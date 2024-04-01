@@ -33,9 +33,6 @@ namespace БазаДанныхИсправленная
             db.Database.EnsureCreated();
             string login = loginInput.Text;
             string password = passwordInput.Password;
-            User user = new User();
-            user.Login = login;
-            user.Password = password;
             if (loginInput.Text == "" && passwordInput.Password == "")
             {
                 MessageBox.Show("Заполните поле: Логнин, Пароль", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -49,7 +46,7 @@ namespace БазаДанныхИсправленная
                 MessageBox.Show("Заполните поле: Пароль", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (db.Users.Any(user => user.Login == login))
+            else if (db.Users.Any(user => user.Login == login))
             {
                 MessageBox.Show("Такой логин уже существует", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -57,23 +54,37 @@ namespace БазаДанныхИсправленная
             {
                 MessageBox.Show("Выбирите свой класс", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(rdBtnSevenClass.IsChecked == true)
+            else
             {
-                db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (7)");
-                db.SaveChanges();
+                if (rdBtnSevenClass.IsChecked == true)
+                {
+                    User user = new User();
+                    user.Login = login;
+                    user.Password = password;
+                    user.NumberOfClassId = 7;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                if (rdBtnEightClass.IsChecked == true)
+                {
+                    User user = new User();
+                    user.Login = login;
+                    user.Password = password;
+                    user.NumberOfClassId = 8;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                if (rdBtnNineClass.IsChecked == true)
+                {
+                    User user = new User();
+                    user.Login = login;
+                    user.Password = password;
+                    user.NumberOfClassId = 9;
+                    db.Users.Add(user);
+                    db.SaveChanges();   
+                }
             }
-            else if (rdBtnEightClass.IsChecked == true)
-            {
-                db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (8)");
-                db.SaveChanges();
-            }
-            else if (rdBtnNineClass.IsChecked == true)
-            {
-                db.Users.FromSqlRaw("INSERT INTO Users (Number_of_class_id) VALUES (9)");
-                db.SaveChanges();
-            }
-
-
+ 
         }
         private void signIn_Click(object sender, RoutedEventArgs e)
         {
